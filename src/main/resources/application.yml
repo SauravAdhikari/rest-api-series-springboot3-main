@@ -1,0 +1,41 @@
+
+
+server:
+  port: 9090
+  servlet:
+    context-path: /api/v1
+  error:
+    include-stacktrace: never
+    include-message: never
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:booksdb
+    username: admin
+    password: a
+    driverClassName: org.h2.Driver
+  jpa:
+    defer-datasource-initialization: true   # to allow DB initialization scripts (since Spring Boot version 2.5.0)
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+#        globally_quoted_identifiers: true    # uses identifiers with quotes to avoid DB reserved words conflict
+    hibernate:
+      ddl:
+        auto: update
+  h2:
+    console:
+      enabled: true # set to false to avoid conflicts with spring security
+
+  jackson:
+    default-property-inclusion: NON_NULL
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+secret:
+#  key: 1234567890poiuytrewqmnbvcxz  # hard-coded example
+  key: ${JWT_SECRET:1234567890qwertyuiop}  # example of environment variable or default value if not found
